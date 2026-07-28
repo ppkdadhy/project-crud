@@ -1,9 +1,20 @@
 <?php
+include "config/koneksi.php";
+session_start();
+session_regenerate_id();
+
 if (isset($_POST['login'])) {
   $email = $_POST['email'];
   $pass = $_POST['password'];
 
-  if ($email == "admin@gmail.com" && $pass == "123") {
+  $login = mysqli_query($conn, "SELECT * FROM users WHERE email = '$email'");
+
+  $row = mysqli_fetch_assoc($login);
+  // mysqli_fetch_all($login, MYSQLI_ASSOC);
+  // var_dump($row);
+
+  if ($email == $row['email'] && $pass == $row['password']) {
+    $_SESSION['NAME'] = $row['name'];
     // KALAU BERHASIL MASUK KE DASHBOARD
     header("location:dashboard.php");
     exit();
