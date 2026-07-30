@@ -28,7 +28,6 @@
                 <ul class="nav nav-secondary">
                     <li class="nav-item active">
                         <a
-
                             href="#dashboard"
 
                             aria-expanded="false">
@@ -36,6 +35,46 @@
                             <p>Dashboard</p>
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a
+
+                            href="user.php"
+                            aria-expanded="false">
+                            <i class="fas fa-user"></i>
+                            <p>User</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a
+
+                            href="slider.php"
+                            aria-expanded="false">
+                            <i class="fa fa-image"></i>
+                            <p>Slider</p>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a
+
+                            href="contact.php"
+                            aria-expanded="false">
+                            <i class="fa fa-address-book"></i>
+                            <p>Contact</p>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a
+
+                            href="setting.php"
+                            aria-expanded="false">
+                            <i class="fa fa-wrench"></i>
+                            <p>Setting</p>
+                        </a>
+                    </li>
+
+
                     <!-- <li class="nav-section">
                         <span class="sidebar-mini-icon">
                             <i class="fa fa-ellipsis-h"></i>

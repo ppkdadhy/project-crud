@@ -1,26 +1,25 @@
 <?php
 include "config/koneksi.php";
 session_start();
-session_regenerate_id();
 
-if (isset($_POST['login'])) {
+
+if (isset($_POST['login'])) { //jika tombol login di tekan
   $email = $_POST['email'];
   $pass = $_POST['password'];
 
   $login = mysqli_query($conn, "SELECT * FROM users WHERE email = '$email'");
-
+  // object {num_rows:10, error:}
   $row = mysqli_fetch_assoc($login);
   // mysqli_fetch_all($login, MYSQLI_ASSOC);
+  // [name=>'budi']
   // var_dump($row);
-
   if ($email == $row['email'] && $pass == $row['password']) {
     $_SESSION['NAME'] = $row['name'];
     // KALAU BERHASIL MASUK KE DASHBOARD
     header("location:dashboard.php");
-    exit();
   } else {
     // KALAU GAGAL TETAP DI LOGIN
-    header("location:signin.php");
+    header("location:index.php");
     exit();
   }
 }
@@ -59,7 +58,8 @@ if (isset($_POST['login'])) {
         <form method="POST" class="needs-validation mt-3" novalidate>
           <div class="mb-3">
             <label for="email" class="form-label">Email address</label>
-            <input name="email" id="email" type="email" class="form-control" placeholder="name@example.com" required autofocus>
+            <input name="email" id="email" type="email" class="form-control"
+              placeholder="name@example.com" required autofocus>
             <div class="invalid-feedback">Please enter a valid email.</div>
           </div>
 
@@ -79,7 +79,7 @@ if (isset($_POST['login'])) {
             </div>
           </div>
 
-          <button class="btn btn-primary w-100" type="submit" name="login">Sign in</button>
+          <button class="btn btn-primary w-100" type="submit" name="login">Tess</button>
         </form>
 
         <div class="text-center mt-3 small text-muted">
@@ -97,4 +97,4 @@ if (isset($_POST['login'])) {
 
 </body>
 
-</html>""
+</html>

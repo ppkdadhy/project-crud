@@ -5,6 +5,7 @@ if (!isset($_SESSION['NAME'])) {
   header("location:signin.php");
   exit();
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
