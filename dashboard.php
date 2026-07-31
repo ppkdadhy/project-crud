@@ -2,14 +2,11 @@
 session_start();
 session_regenerate_id();
 if (!isset($_SESSION['NAME'])) {
-  header("location:signin.php");
+  header("location:index.php");
   exit();
 }
-<<<<<<< HEAD
 
-=======
-// tes clone
->>>>>>> ec6fa143dec230a99d7b63dceda32b575a50507b
+
 ?>
 <!DOCTYPE html>
 <html lang="en">

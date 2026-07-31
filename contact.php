@@ -4,7 +4,7 @@ session_regenerate_id();
 include 'config/koneksi.php';
 
 if (!isset($_SESSION['NAME'])) {
-  header("location:signin.php");
+  header("location:index.php");
   exit();
 }
 
@@ -17,8 +17,8 @@ $rows  = mysqli_fetch_all($query, MYSQLI_ASSOC);
 // jika params delete ada
 if (isset($_GET['delete'])) {
   $delete = $_GET['delete'];
-  $delete = mysqli_query($conn, "DELETE FROM users WHERE id='$delete'");
-  header("location:user.php?hapus=berhasil");
+  $delete = mysqli_query($conn, "DELETE FROM contacts WHERE id='$delete'");
+  header("location:contact.php?hapus=berhasil");
 }
 
 ?>
@@ -112,7 +112,7 @@ if (isset($_GET['delete'])) {
                           <td><?php echo $row['message'] ?></td>
                           <td>
                             <a class="btn btn-success btn-sm"
-                              href="create-user.php?edit=<?php echo $row['id'] ?>">Detail</a>
+                              href="detail.php?edit=<?php echo $row['id'] ?>">Detail</a>
 
                             <a onclick="return confirm('Are you sure wanna delete this data?')"
                               class="btn btn-danger btn-sm"

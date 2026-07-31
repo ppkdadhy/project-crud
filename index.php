@@ -5,7 +5,7 @@ session_start();
 
 if (isset($_POST['login'])) { //jika tombol login di tekan
   $email = $_POST['email'];
-  $pass = $_POST['password'];
+  $pass = sha1($_POST['password']);
 
   $login = mysqli_query($conn, "SELECT * FROM users WHERE email = '$email'");
   // object {num_rows:10, error:}
@@ -48,8 +48,8 @@ if (isset($_POST['login'])) { //jika tombol login di tekan
     <div class="card " style="max-width:420px; width:100%;">
       <div class="card-body p-5">
         <div class="text-center mb-3">
-          <a href="index.html" class="mb-4 d-inline-block"><img src="assets/inapp-1.0.0/src/assets/images/logo-icon.svg" alt="" width="36">
-            <span class=" ms-2"> <img src="assets/inapp-1.0.0/src/assets/images/logo.svg" alt=""></span>
+          <a href="index.html" class="mb-4 d-inline-block">
+            <span class=" ms-2"> <img src="assets/kaiadmin-lite-1.2.0/assets/img/kaiadmin/logo_dark.png" width="150" alt=""></span>
           </a>
           <h1 class="card-title mb-5 h5">Sign in to your account</h1>
 

@@ -4,12 +4,12 @@ session_regenerate_id();
 include 'config/koneksi.php';
 
 if (!isset($_SESSION['NAME'])) {
-  header("location:signin.php");
+  header("location:index.php");
   exit();
 }
 
 $id = isset($_GET['edit']) ? $_GET['edit'] : '';
-$query = mysqli_query($conn, "SELECT * FROM users WHERE id='$id'");
+$query = mysqli_query($conn, "SELECT * FROM sliders WHERE id='$id'");
 $row   = mysqli_fetch_assoc($query);
 
 
@@ -23,18 +23,35 @@ if (isset($_POST['save'])) {
   $button2_text = $_POST['button2_text'];
   $button2_link = $_POST['button2_link'];
   $image = $_FILES['image'];
+  $is_active = $_POST['is_active'];
 
-  //masukkan ke dalam users sebutkan kolom di table user nilainya 
-  // di ambil dari user nginput
-  if ($id) {
-    // query update
-    $update = mysqli_query($conn, "UPDATE users SET name='$name', 
-    email='$email', password='$password' WHERE id='$id'");
-    header("location:user.php?update=berhasil");
+  if ($image['error'] == 0) {
+    $filename = uniqid() . "_" . basename($image['name']);
+    $filepath = "assets/img/" . $filename;
+
+    if ($id && !empty($row['image'])) {
+      $old_picture_path = "assets/img/" . $row['image'];
+      if (file_exists($old_picture_path)) {
+        unlink($old_picture_path);
+      }
+    }
+    move_uploaded_file($image['tmp_name'], $filepath);
+
+    //masukkan ke dalam users sebutkan kolom di table user nilainya 0
+    // di ambil dari user nginput
+    if ($id) {
+      // update bersama gambar
+      // query update
+      $update = mysqli_query($conn, "UPDATE sliders SET title='$title', subtitle='$subtitle', description='$description', button1_text='$button1_text', button1_link='$button1_link', button2_text='$button2_text', image='$filename', button2_link='$button2_link', is_active='$is_active' WHERE id='$id'");
+      header("location:slider.php?update=berhasil");
+    } else {
+      $insert = mysqli_query($conn, "INSERT INTO sliders(title, subtitle, description, button1_text, button1_link, button2_text, image, button2_link, is_active) VALUES ('$title','$subtitle','$description','$button1_text','$button1_link','$button2_text', '$filename','$button2_link', '$is_active')");
+      header("location:slider.php?tambah=berhasil");
+    }
   } else {
-    $insert = mysqli_query($conn, "INSERT INTO sliders(title, subtitle, description, button1_text, button1_link, button2_text, button2_link) VALUES ('$title','$subtitle','$description','$button1_text','$button1_link','$button2_text','$button2_link')");
-
-    header("location:slider.php?tambah=berhasil");
+    // update tanpa harus mengubah gambar
+    $update = mysqli_query($conn, "UPDATE sliders SET title='$title', subtitle='$subtitle', description='$description', button1_text='$button1_text', button1_link='$button1_link', button2_text='$button2_text', button2_link='$button2_link', is_active='$is_active' WHERE id='$id'");
+    header("location:slider.php?update=berhasil");
   }
 }
 
@@ -162,7 +179,23 @@ if (isset($_POST['save'])) {
                     </div>
                     <div class="mb-3">
                       <label for="" class="form-label fw-bold">Description</label>
-                      <textarea class="form-control" name="description" cols="30" rows="3"></textarea>
+                      <textarea class="form-control" name="description" cols="30" rows="3"><?php echo ($id) ? $row['description'] : '' ?></textarea>
+                    </div>
+                    <div class="mb-3">
+                      <div class="form-check">
+                        <input class="form-check-input" type="radio" name="is_active" id="radioDefault1" value="1"
+                          checked <?php echo ($id) && $row['is_active'] == 1 ? "checked" : '' ?>>
+                        <label class="form-check-label" for="radioDefault1">
+                          Active
+                        </label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="radio" name="is_active" id="radioDefault2" value="0"
+                          <?php echo ($id) && $row['is_active'] == 0 ? "checked" : '' ?>>
+                        <label class="form-check-label" for="radioDefault2">
+                          In-Active
+                        </label>
+                      </div>
                     </div>
                     <div class="mb-3">
                       <button class="btn btn-primary" name="save" type="submit">

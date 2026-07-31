@@ -4,7 +4,7 @@ session_regenerate_id();
 include 'config/koneksi.php';
 
 if (!isset($_SESSION['NAME'])) {
-  header("location:signin.php");
+  header("location:index.php");
   exit();
 }
 
